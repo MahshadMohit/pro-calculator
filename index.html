@@ -42,5 +42,75 @@
         
     </div>
 </body>
+<script>
+    let display = document.getElementById("display");
+    let buttons = document.querySelectorAll("button");
+    let currentInput = "";
+    let operator = "";
+    let firstNumber = "";
+    let secondNumber = "";
+
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            let value = button.textContent;
+
+            // اگر عدد باشد، آن را به ورودی اضافه کن
+            if (!isNaN(value) || value === '.') {
+                currentInput += value;
+                display.value = currentInput;
+            }
+            // اگر اپراتور باشد، عملگر را تنظیم کن
+            else if (value === "+" || value === "-" || value === "*" || value === "/") {
+                if (firstNumber === "") {
+                    firstNumber = currentInput;
+                } else if (currentInput !== "") {
+                    secondNumber = currentInput;
+                    firstNumber = operate(firstNumber, secondNumber, operator);
+                    display.value = firstNumber;
+                }
+                operator = value;
+                currentInput = "";
+            }
+          
+            else if (value === "=") {
+                secondNumber = currentInput;
+                if (firstNumber !== "" && secondNumber !== "") {
+                    firstNumber = operate(firstNumber, secondNumber, operator);
+                    display.value = firstNumber;
+                    operator = "";
+                    currentInput = "";
+                }
+            }
+            
+            else if (value === "C") {
+                currentInput = "";
+                display.value = "";
+                firstNumber = "";
+                secondNumber = "";
+                operator = "";
+            }
+        });
+    });
+
+    function operate(first, second, operator) {
+        first = parseFloat(first);
+        second = parseFloat(second);
+        switch (operator) {
+            case "+":
+                return first + second;
+            case "-":
+                return first - second;
+            case "*":
+                return first * second;
+            case "/":
+                if (second === 0) {
+                    return "Error";
+                }
+                return first / second;
+            default:
+                return second;
+        }
+    }
+</script>
 
 </html>
