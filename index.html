@@ -54,12 +54,10 @@
         button.addEventListener("click", function() {
             let value = button.textContent;
 
-            // اگر عدد باشد، آن را به ورودی اضافه کن
             if (!isNaN(value) || value === '.') {
                 currentInput += value;
                 display.value = currentInput;
             }
-            // اگر اپراتور باشد، عملگر را تنظیم کن
             else if (value === "+" || value === "-" || value === "*" || value === "/") {
                 if (firstNumber === "") {
                     firstNumber = currentInput;
